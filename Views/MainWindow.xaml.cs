@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 
 namespace WindowsExplorer
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
