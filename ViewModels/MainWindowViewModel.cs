@@ -23,10 +23,10 @@ namespace WindowsExplorer.ViewModels
         /// </summary>
        public MainWindowViewModel()
         {
-            VM =
-            [
-                new Model_TreeViewItem(@"C:\Users\No4sajiryuku")
-            ];
+            VM = new List<Model_TreeViewItem>()
+            {
+                new Model_TreeViewItem(@"C:\ユーザー\test-MVVM")
+            };
         }
     }
 }

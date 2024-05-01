@@ -8,13 +8,14 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding VM}"/>
-        <ListView HorizontalAlignment="Left" Height="385" Margin="291,22,0,0" VerticalAlignment="Top" Width="460" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView HorizontalAlignment="Left" Height="193" Margin="291,214,0,0" VerticalAlignment="Top" Width="460" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding VM/_SelectionItem.Value._Directory.Name}" />
 
     </Grid>
 </Window>
