@@ -1,11 +1,14 @@
-﻿<Window x:Class="WindowsExplorer.MainWindow"
+﻿<Window x:Class="WindowsExplorer.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WindowsExplorer"
+        xmlns:vm="clr-namespace:WindowsExplorer.ViewModels"
+        xmlns:local="clr-namespace:WindowsExplorer" 
+        xmlns:viewmodels="clr-namespace:WindowsExplorer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
         <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding VM}"/>
         <ListView HorizontalAlignment="Left" Height="193" Margin="291,214,0,0" VerticalAlignment="Top" Width="460" d:ItemsSource="{d:SampleData ItemCount=5}">

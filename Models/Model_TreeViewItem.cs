@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,26 +20,33 @@ namespace WindowsExplorer.Models
 
         public Model_TreeViewItem(string path)
         {
-            this._Directory = new DirectoryInfo(path);
+            Debug.WriteLine("Test");
+            Debug.WriteLine(path);
+            _Directory = new DirectoryInfo(path);
             if (_Directory.GetDirectories().Count() > 0)
             {
-                this.Items.Add(new TreeViewItem());
-                this.Expanded += Model_TreeViewItem_Expanded;
+                Items.Add(new TreeViewItem());
+                Expanded += Model_TreeViewItem_Expanded;
             }
-            this.Header = CreateHeader();
-            this.Selected += Model_TreeViewItem_Selected;
+            else
+            {
+                Debug.WriteLine("nothing");
+            }
+            Header = CreateHeader();
+            Selected += Model_TreeViewItem_Selected;
         }
 
         private void Model_TreeViewItem_Expanded(object sender, RoutedEventArgs e)
         {
             if (!_Expanded)
             {
-                this.Items.Clear();
+                Items.Clear();
                 foreach (DirectoryInfo dir in _Directory.GetDirectories())
                 {
                     if (dir.Attributes == FileAttributes.Directory)
                     {
-                        this.Items.Add(new Model_TreeViewItem(dir.FullName));
+                        Items.Add(new Model_TreeViewItem(dir.FullName));
+                        Debug.WriteLine(dir.FullName);
                     }
                 }
                 _Expanded = true;
@@ -60,7 +68,7 @@ namespace WindowsExplorer.Models
 
         private void Model_TreeViewItem_Selected(object sender, RoutedEventArgs e)
         {
-            _SelectionItem.Value = (this.IsSelected) ? this : (Model_TreeViewItem)e.Source;
+            _SelectionItem.Value = (IsSelected) ? this : (Model_TreeViewItem)e.Source;
         }
     }
 }
