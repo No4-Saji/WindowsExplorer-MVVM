@@ -24,10 +24,7 @@ namespace WindowsExplorer.ViewModels
         public MainWindowViewModel()
         {
             Debug.WriteLine("Test");
-            VM = new List<Model_TreeViewItem>()
-            {
-                new Model_TreeViewItem(@"C:\Users\test-MVVM")
-            };
+            VM = new List<Model_TreeViewItem>(){new Model_TreeViewItem(@"C:\Users\test-MVVM")};
         }
     }
 }

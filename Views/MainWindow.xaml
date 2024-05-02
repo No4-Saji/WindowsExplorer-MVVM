@@ -21,4 +21,6 @@
         <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding VM/_SelectionItem.Value._Directory.Name}" />
 
     </Grid>
+                
+            
 </Window>

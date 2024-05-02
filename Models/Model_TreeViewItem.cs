@@ -43,10 +43,12 @@ namespace WindowsExplorer.Models
                 Items.Clear();
                 foreach (DirectoryInfo dir in _Directory.GetDirectories())
                 {
-                    if (dir.Attributes == FileAttributes.Directory)
+                    Debug.WriteLine(dir.FullName);
+                    if (dir.Attributes.HasFlag(FileAttributes.Directory))
                     {
-                        Items.Add(new Model_TreeViewItem(dir.FullName));
                         Debug.WriteLine(dir.FullName);
+                        Items.Add(new Model_TreeViewItem(dir.FullName));
+                        
                     }
                 }
                 _Expanded = true;
