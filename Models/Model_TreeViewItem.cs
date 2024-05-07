@@ -57,7 +57,7 @@ namespace WindowsExplorer.Models
             StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal };
             sp.Children.Add(new Image()
             {
-                Source = new BitmapImage(new Uri(@"C:\fork\WindowsExplorer\Resources\Folder.ico", UriKind.Relative)),
+                Source = new BitmapImage(new Uri(@"C:\fork\WindowsExplorer\Resources\Folder.ico", UriKind.RelativeOrAbsolute)),
                 Width = 15,
                 Height = 18,
             });
