@@ -10,7 +10,10 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding VM}"/>
+        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding VM}" >
+       
+        </TreeView>
+
         <ListView HorizontalAlignment="Left" Height="193" Margin="291,214,0,0" VerticalAlignment="Top" Width="460" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>

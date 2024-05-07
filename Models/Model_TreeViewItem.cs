@@ -20,8 +20,6 @@ namespace WindowsExplorer.Models
 
         public Model_TreeViewItem(string path)
         {
-            Debug.WriteLine("Test");
-            Debug.WriteLine(path);
             _Directory = new DirectoryInfo(path);
             if (_Directory.GetDirectories().Count() > 0)
             {
@@ -43,7 +41,6 @@ namespace WindowsExplorer.Models
                 Items.Clear();
                 foreach (DirectoryInfo dir in _Directory.GetDirectories())
                 {
-                    Debug.WriteLine(dir.FullName);
                     if (dir.Attributes.HasFlag(FileAttributes.Directory))
                     {
                         Debug.WriteLine(dir.FullName);
@@ -60,13 +57,14 @@ namespace WindowsExplorer.Models
             StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal };
             sp.Children.Add(new Image()
             {
-                Source = new BitmapImage(new Uri(@"Resources\Folder.ico", UriKind.Relative)),
+                Source = new BitmapImage(new Uri(@"C:\fork\WindowsExplorer\Resources\Folder.ico", UriKind.Relative)),
                 Width = 15,
                 Height = 18,
             });
             sp.Children.Add(new TextBlock() { Text = _Directory.Name });
             return sp;
         }
+
 
         private void Model_TreeViewItem_Selected(object sender, RoutedEventArgs e)
         {
