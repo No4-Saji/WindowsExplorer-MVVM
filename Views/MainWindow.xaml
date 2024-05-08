@@ -10,7 +10,7 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding VM}" >
+        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding viewModel}" >
        
         </TreeView>
 
@@ -21,7 +21,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding VM/_SelectionItem.Value._Directory.Name}" />
+        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding viewModel/_selectionItem.Value._directory.Name}" />
 
     </Grid>
                 

@@ -17,13 +17,16 @@ namespace WindowsExplorer.ViewModels
 {
     internal class MainWindowViewModel : ObservableObject
     {
-        public List<Model_TreeViewItem> VM { get; }
+        
+        // Modelで得られたプロパティをViewModelに引き継ぐ
+        public List<Model_TreeViewItem> viewModel { get; }
+        
         /// <summary>
         /// パスの引き渡し
         /// </summary>
         public MainWindowViewModel()
         {
-            VM = new List<Model_TreeViewItem>(){new Model_TreeViewItem(@"C:\Users\test-MVVM") };
+            viewModel = new List<Model_TreeViewItem>(){new Model_TreeViewItem(@"C:\Users\test-MVVM") };
         }
     }
 }
