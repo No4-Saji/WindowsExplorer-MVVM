@@ -88,7 +88,7 @@ namespace WindowsExplorer.Models
         /// <returns>アイコンとフォルダ名</returns>
         private StackPanel CreateHeader()
         {
-            StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal };
+            var sp = new StackPanel() { Orientation = Orientation.Horizontal };
             sp.Children.Add(new Image()
             {
                 Source = new BitmapImage(new Uri(@"C:\fork\WindowsExplorer\Resources\Folder.ico", UriKind.RelativeOrAbsolute)),
