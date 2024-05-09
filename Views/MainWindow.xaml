@@ -3,14 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:WindowsExplorer.ViewModels"
-        xmlns:local="clr-namespace:WindowsExplorer" 
         xmlns:viewmodels="clr-namespace:WindowsExplorer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding viewModel}" >
+        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding ViewModel}" >
        
         </TreeView>
 
@@ -21,7 +19,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding viewModel/_selectionItem.Value._directory.Name}" />
+        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding ViewModel/_SelectionItem.Value._Directory.Name}" />
 
     </Grid>
                 
