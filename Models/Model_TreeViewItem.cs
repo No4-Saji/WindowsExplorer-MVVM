@@ -34,25 +34,35 @@ namespace WindowsExplorer.Models
         /// <summary>
         /// 渡されたディレクりにサブディレクトリがある場合にTreeViewItemを生成
         /// </summary>
-        /// <param name="path">rootディレクトリのパス</param>
-        /// <see cref="Model_TreeViewItem_Expanded"/>
+        /// <param name="directoryInfo">ディレクトリ</param>
         /// <see cref="CreateHeader"/>
-        /// <see cref="Model_TreeViewItem_Selected"/>
-        public Model_TreeViewItem(string path)
+        /// <see cref="OnSelectedModelTreeViewItem"/>
+        public Model_TreeViewItem(DirectoryInfo directoryInfo)
         {
             try
             {
-                _Directory = new DirectoryInfo(path);
+                _Directory = directoryInfo;
                 if (_Directory.GetDirectories().Count() > 0)
-                {
-                    Items.Add(new TreeViewItem());
-                    Expanded += Model_TreeViewItem_Expanded;
+                {    
+                    if(_Directory.FullName == @"C:\")
+                    {
+                        try
+                        {
+                            foreach (var dir in _Directory.GetDirectories())
+                            {
+                                if (dir.Attributes.HasFlag(FileAttributes.Directory))
+                                {
+                                    Items.Add(new Model_TreeViewItem(dir));
+                                }
+                            }
+                        }
+                        catch { }
+                    }
                 }
-
                 Header = CreateHeader();
-                Selected += Model_TreeViewItem_Selected;
+                Selected += OnSelectedModelTreeViewItem;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine("エラーが発生しました:" + ex.Message);
             }
@@ -61,27 +71,29 @@ namespace WindowsExplorer.Models
 
 
         #region イベントハンドラ
-        
+
         /// <summary>
         /// 展開されていないツリービューアイテムが展開されたときの処理。
-        /// 子のツリービューアイテムを初期化し、子アイテムを追加していく。
+        /// 子アイテムを追加していく。
         /// </summary>
-        /// <param name="sender">イベントを発生させたオブジェクト</param>
         /// <param name="e">イベント関連の情報を持ったオブジェクト</param>
-        private void Model_TreeViewItem_Expanded(object sender, RoutedEventArgs e)
+        protected override void OnExpanded(RoutedEventArgs e)
         {
-            if (!_Expanded)
+            try
             {
-                Items.Clear();
-                foreach (DirectoryInfo dir in _Directory.GetDirectories())
+                if (!_Expanded)
                 {
-                    if (dir.Attributes.HasFlag(FileAttributes.Directory))
-                    {
-                        Items.Add(new Model_TreeViewItem(dir.FullName));                       
+                    foreach (var dir in _Directory.GetDirectories())
+                    { 
+                        if (dir.Attributes.HasFlag(FileAttributes.Directory))
+                        {
+                            Items.Add(new Model_TreeViewItem(dir));
+                        }
                     }
+                    _Expanded = true;
                 }
-                _Expanded = true;
             }
+            catch { }
         }
 
         /// <summary>
@@ -89,7 +101,7 @@ namespace WindowsExplorer.Models
         /// </summary>
         /// <param name="sender">イベントを発生させたオブジェクト</param>
         /// <param name="e">イベント関連の情報を持ったオブジェクト</param>
-        private void Model_TreeViewItem_Selected(object sender, RoutedEventArgs e)
+        private void OnSelectedModelTreeViewItem(object sender, RoutedEventArgs e)
         {
             _SelectionItem.Value = (IsSelected) ? this : (Model_TreeViewItem)e.Source;
         }
