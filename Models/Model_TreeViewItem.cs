@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Net.WebSockets;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -7,12 +8,16 @@ using Reactive.Bindings;
 
 namespace WindowsExplorer.Models
 {
+    
+
     /// <summary>
     /// フォルダをツリー構造として表示するためのクラス。
     /// ディレクトリのパスを基にサブディレクトリがある場合に展開可能なTreeViewItemを生成する。
     /// </summary>
+
     public class Model_TreeViewItem : TreeViewItem
     {
+
         #region プロパティ
         ///<summary>
         ///ディレクトリのパス
@@ -44,7 +49,7 @@ namespace WindowsExplorer.Models
                 _Directory = directoryInfo;
                 if (_Directory.GetDirectories().Count() > 0)
                 {    
-                    if(_Directory.FullName == @"C:\")
+                    if(_Directory.FullName == @"C:\" && _Directory.Attributes.HasFlag(FileAttributes.Directory))
                     {
                         try
                         {
@@ -59,6 +64,7 @@ namespace WindowsExplorer.Models
                         catch { }
                     }
                 }
+
                 Header = CreateHeader();
                 Selected += OnSelectedModelTreeViewItem;
             }
@@ -79,21 +85,25 @@ namespace WindowsExplorer.Models
         /// <param name="e">イベント関連の情報を持ったオブジェクト</param>
         protected override void OnExpanded(RoutedEventArgs e)
         {
-            try
+            if (!_Expanded)
             {
-                if (!_Expanded)
+                foreach (var i in Items.OfType<Model_TreeViewItem>())
                 {
-                    foreach (var dir in _Directory.GetDirectories())
-                    { 
+                    foreach (var dir in i._Directory.GetDirectories())
+                    {
                         if (dir.Attributes.HasFlag(FileAttributes.Directory))
                         {
-                            Items.Add(new Model_TreeViewItem(dir));
+                            var childItem = new Model_TreeViewItem(dir);
+                            Items.Add(childItem);
+                            SearchGrandson(childItem, dir);
                         }
+
                     }
-                    _Expanded = true;
                 }
+
+                _Expanded = true;
             }
-            catch { }
+
         }
 
         /// <summary>
@@ -127,5 +137,36 @@ namespace WindowsExplorer.Models
         }
         #endregion
 
+
+        private void SearchChildren(DirectoryInfo directoryInfoOfChildren)
+        {
+            
+            foreach (var dir in directoryInfoOfChildren.GetDirectories())
+            {
+                if (dir.Attributes.HasFlag(FileAttributes.Directory))
+                {
+                    var childItem = new Model_TreeViewItem(dir);
+                    Items.Add(childItem);
+                    SearchGrandson(childItem, dir);
+                }
+
+            }
+        }
+
+        private void SearchGrandson(Model_TreeViewItem parentItem, DirectoryInfo directoryInfoOfGrandSon)
+        {
+            try
+            {
+                foreach (var dir in directoryInfoOfGrandSon.GetDirectories())
+                {
+                    if (dir.Attributes.HasFlag(FileAttributes.Directory))
+                    {
+                        parentItem.Items.Add(new Model_TreeViewItem(dir));
+                    }
+
+                }
+            }
+            catch { }
+        }
     }
 }
