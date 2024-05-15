@@ -8,8 +8,6 @@ using Reactive.Bindings;
 
 namespace WindowsExplorer.Models
 {
-    
-
     /// <summary>
     /// フォルダをツリー構造として表示するためのクラス。
     /// ディレクトリのパスを基にサブディレクトリがある場合に展開可能なTreeViewItemを生成する。
@@ -17,10 +15,9 @@ namespace WindowsExplorer.Models
 
     public class Model_TreeViewItem : TreeViewItem
     {
-
         #region プロパティ
         ///<summary>
-        ///ディレクトリのパス
+        ///ディレクトリ
         ///</summary>
         public DirectoryInfo _Directory { get; set; }
         ///<summary>
@@ -37,41 +34,16 @@ namespace WindowsExplorer.Models
         #region コンストラクタ
 
         /// <summary>
-        /// 渡されたディレクりにサブディレクトリがある場合にTreeViewItemを生成
+        /// 渡されたディレクりのヘッダー作成、選択されているかどうかをチェック
         /// </summary>
         /// <param name="directoryInfo">ディレクトリ</param>
         /// <see cref="CreateHeader"/>
         /// <see cref="OnSelectedModelTreeViewItem"/>
         public Model_TreeViewItem(DirectoryInfo directoryInfo)
         {
-            try
-            {
-                _Directory = directoryInfo;
-                if (_Directory.GetDirectories().Count() > 0)
-                {    
-                    if(_Directory.FullName == @"C:\" && _Directory.Attributes.HasFlag(FileAttributes.Directory))
-                    {
-                        try
-                        {
-                            foreach (var dir in _Directory.GetDirectories())
-                            {
-                                if (dir.Attributes.HasFlag(FileAttributes.Directory))
-                                {
-                                    Items.Add(new Model_TreeViewItem(dir));
-                                }
-                            }
-                        }
-                        catch { }
-                    }
-                }
-
-                Header = CreateHeader();
-                Selected += OnSelectedModelTreeViewItem;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("エラーが発生しました:" + ex.Message);
-            }
+            _Directory = directoryInfo;
+            Header = CreateHeader();
+            Selected += OnSelectedModelTreeViewItem;
         }
         #endregion
 
@@ -85,25 +57,18 @@ namespace WindowsExplorer.Models
         /// <param name="e">イベント関連の情報を持ったオブジェクト</param>
         protected override void OnExpanded(RoutedEventArgs e)
         {
-            if (!_Expanded)
+            Debug.WriteLine(_Expanded);
+            if (_Expanded)
             {
-                foreach (var i in Items.OfType<Model_TreeViewItem>())
-                {
-                    foreach (var dir in i._Directory.GetDirectories())
-                    {
-                        if (dir.Attributes.HasFlag(FileAttributes.Directory))
-                        {
-                            var childItem = new Model_TreeViewItem(dir);
-                            Items.Add(childItem);
-                            SearchGrandson(childItem, dir);
-                        }
-
-                    }
-                }
-
-                _Expanded = true;
+                return;
             }
 
+            foreach (var item in Items.OfType<Model_TreeViewItem>())
+            {
+                item.CreateChildren();
+            }
+
+            _Expanded = true;
         }
 
         /// <summary>
@@ -113,7 +78,7 @@ namespace WindowsExplorer.Models
         /// <param name="e">イベント関連の情報を持ったオブジェクト</param>
         private void OnSelectedModelTreeViewItem(object sender, RoutedEventArgs e)
         {
-            _SelectionItem.Value = (IsSelected) ? this : (Model_TreeViewItem)e.Source;
+            _SelectionItem.Value = IsSelected ? this : (Model_TreeViewItem)e.Source;
         }
 
         #endregion
@@ -137,36 +102,24 @@ namespace WindowsExplorer.Models
         }
         #endregion
 
-
-        private void SearchChildren(DirectoryInfo directoryInfoOfChildren)
-        {
-            
-            foreach (var dir in directoryInfoOfChildren.GetDirectories())
-            {
-                if (dir.Attributes.HasFlag(FileAttributes.Directory))
-                {
-                    var childItem = new Model_TreeViewItem(dir);
-                    Items.Add(childItem);
-                    SearchGrandson(childItem, dir);
-                }
-
-            }
-        }
-
-        private void SearchGrandson(Model_TreeViewItem parentItem, DirectoryInfo directoryInfoOfGrandSon)
+        /// <summary>
+        /// 子ディレクりを作成し、TreeViewItemに追加
+        /// </summary>
+        public void CreateChildren()
         {
             try
             {
-                foreach (var dir in directoryInfoOfGrandSon.GetDirectories())
+                foreach (var dir in _Directory.GetDirectories())
                 {
                     if (dir.Attributes.HasFlag(FileAttributes.Directory))
                     {
-                        parentItem.Items.Add(new Model_TreeViewItem(dir));
+                        Items.Add(new Model_TreeViewItem(dir));
                     }
-
                 }
             }
-            catch { }
+            catch (Exception)
+            {
+            }
         }
     }
 }

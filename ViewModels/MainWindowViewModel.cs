@@ -23,7 +23,9 @@ namespace WindowsExplorer.ViewModels
         public MainWindowViewModel()
         {
             _Directory = new DirectoryInfo(@"C:\");
-            ViewModel = new List<Model_TreeViewItem>(){new Model_TreeViewItem(_Directory) };
+            var vm = new Model_TreeViewItem(_Directory);
+            vm.CreateChildren();
+            ViewModel = new List<Model_TreeViewItem>(){ vm };
         }
     }
 }
