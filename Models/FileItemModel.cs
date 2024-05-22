@@ -11,10 +11,8 @@ namespace WindowsExplorer.Models
     /// フォルダをツリー構造として表示するためのクラス。
     /// ディレクトリのパスを基にサブディレクトリがある場合に展開可能なTreeViewItemを生成する。
     /// </summary>
-
     public class FileItemModel : TreeViewItem
     {
-
         #region プロパティ
         /// <summary>
         /// ディレクトリ
@@ -30,7 +28,7 @@ namespace WindowsExplorer.Models
         public ReactiveProperty<FileItemModel> SelectionItem { get; set; } = new ReactiveProperty<FileItemModel>();
         #endregion
 
-        #region コンストラクタ
+        #region コンストラクタ   
         /// <summary>
         /// 渡されたディレクりのヘッダー作成、選択されているかどうかをチェック
         /// </summary>
@@ -45,7 +43,8 @@ namespace WindowsExplorer.Models
         }
         #endregion
 
-        #region イベントハンドラ
+
+        #region イベントハンドラ       
         /// <summary>
         /// 展開されていないツリービューアイテムが展開されたときの処理。
         /// 子アイテムを追加していく。
