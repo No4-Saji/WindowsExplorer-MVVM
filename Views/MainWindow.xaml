@@ -19,7 +19,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding ViewModel/_SelectionItem.Value._Directory.Name}" />
+        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding ViewModel/SelectionItem.Value.Directory.Name}" />
 
     </Grid>
                 
