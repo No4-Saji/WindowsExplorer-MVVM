@@ -14,10 +14,11 @@ namespace WindowsExplorer.Models
     public class FileItemModel : TreeViewItem
     {
         #region プロパティ
+
         /// <summary>
         /// ディレクトリ
         /// </summary>
-        public DirectoryInfo Directory { get; set; }
+        public DirectoryInfo Directory { get; set; }        
         /// <summary>
         /// フォルダが展開されているかどうかのチェック
         /// </summary> 
@@ -29,6 +30,7 @@ namespace WindowsExplorer.Models
         #endregion
 
         #region コンストラクタ   
+        
         /// <summary>
         /// 渡されたディレクりのヘッダー作成、選択されているかどうかをチェック
         /// </summary>
@@ -43,8 +45,8 @@ namespace WindowsExplorer.Models
         }
         #endregion
 
-
         #region イベントハンドラ       
+        
         /// <summary>
         /// 展開されていないツリービューアイテムが展開されたときの処理。
         /// 子アイテムを追加していく。
@@ -75,7 +77,9 @@ namespace WindowsExplorer.Models
         }
         #endregion
 
+        
         #region CreateHeaderメソッド
+        
         /// <summary>
         /// Headerを生成するメソッド
         /// </summary>
@@ -95,6 +99,7 @@ namespace WindowsExplorer.Models
         #endregion
 
         #region CreateChildrenメソッド
+        
         /// <summary>
         /// 子ディレクりを作成し、TreeViewItemに追加
         /// </summary>
