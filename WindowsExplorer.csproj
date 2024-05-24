@@ -8,4 +8,17 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\Folder.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="ReactiveProperty" Version="9.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Folder.ico" />
+  </ItemGroup>
+
 </Project>

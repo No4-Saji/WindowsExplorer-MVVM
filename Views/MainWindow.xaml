@@ -1,0 +1,27 @@
+﻿<Window x:Class="WindowsExplorer.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:WindowsExplorer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid>
+        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding ViewModel}" >
+       
+        </TreeView>
+
+        <ListView HorizontalAlignment="Left" Height="193" Margin="291,214,0,0" VerticalAlignment="Top" Width="460" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding ViewModel/SelectionItem.Value.Directory.Name}" />
+
+    </Grid>
+                
+            
+</Window>
