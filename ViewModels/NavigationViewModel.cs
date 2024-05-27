@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reactive.Bindings;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -24,9 +25,9 @@ namespace WindowsExplorer.ViewModels
         public DirectoryInfo Directory { get; set; }
 
         /// <summary>
-        /// フォルダが展開されているかどうかのチェック
-        /// </summary> 
-        private bool Expanded { get; set; } = false;
+        /// 選択しているフォルダを判別する
+        /// </summary>
+        public static ReactiveProperty<NavigationViewModel> SelectionItem { get; set; } = new ReactiveProperty<NavigationViewModel>();
 
         /// <summary>
         /// NavigationItemViewModelから値をとってこれるようにする。
@@ -46,29 +47,6 @@ namespace WindowsExplorer.ViewModels
             vm.CreateChildren();
             ViewModel = new List<NavigationItemViewModel>() { vm };
         }
-
-        #region 展開メソッド
-
-        /// <summary>
-        /// 展開されていないツリービューアイテムが展開されたときの処理。
-        /// 子アイテムを追加していく。
-        /// </summary>
-        /// <param name="e"> イベント関連の情報を持ったオブジェクト </param>
-        protected override void OnExpanded(RoutedEventArgs e)
-        {
-            Debug.WriteLine(Expanded);
-            if (Expanded)
-            {
-                return;
-            }
-            foreach (var item in Items.OfType<FileItemModel>())
-            {
-                item.CreateChildren();
-            }
-            Expanded = true;
-        }
-
-        #endregion
 
     }
 }
