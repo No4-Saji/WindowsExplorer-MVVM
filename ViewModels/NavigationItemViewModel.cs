@@ -1,6 +1,7 @@
 ﻿using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,9 +27,9 @@ namespace WindowsExplorer.ViewModels
         public DirectoryInfo Directory { get; set; }
 
         /// <summary>
-        /// 選択しているフォルダを判別する
-        /// </summary>
-        public ReactiveProperty<NavigationItemViewModel> SelectionItem { get; set; } = new ReactiveProperty<NavigationItemViewModel>();
+        /// フォルダが展開されているかどうかのチェック
+        /// </summary> 
+        private bool Expanded { get; set; } = false;
 
         /// <summary>
         /// FolderItemModelから値を得られるようにする。
@@ -55,20 +56,6 @@ namespace WindowsExplorer.ViewModels
 
         #endregion
 
-        #region OnSelectedModelTreeViewItemメソッド
-
-        /// <summary>
-        /// 選択されたフォルダをプロパティに格納する
-        /// </summary>
-        /// <param name="sender"> イベントを発生させたオブジェクト </param>
-        /// <param name="e"> イベント関連の情報を持ったオブジェクト </param>
-        private void OnSelectedModelTreeViewItem(object sender, RoutedEventArgs e)
-        {
-            SelectionItem.Value = IsSelected ? this : (NavigationItemViewModel)e.Source;
-        }
-
-        #endregion
-
         #region CreateHeaderメソッド
 
         /// <summary>
@@ -80,7 +67,7 @@ namespace WindowsExplorer.ViewModels
             var sp = new StackPanel() { Orientation = Orientation.Horizontal };
             sp.Children.Add(new Image()
             {
-                Source = new BitmapImage(new Uri(@"\Resources\Folder.ico", UriKind.Relative)),
+                Source = new BitmapImage(new Uri(FolderItemModel.IconUri,UriKind.Relative)),
                 Width = 15,
                 Height = 18,
             });
@@ -89,6 +76,44 @@ namespace WindowsExplorer.ViewModels
         }
 
         #endregion
+
+        #region 展開メソッド
+
+        /// <summary>
+        /// 展開されていないツリービューアイテムが展開されたときの処理。
+        /// 子アイテムを追加していく。
+        /// </summary>
+        /// <param name="e"> イベント関連の情報を持ったオブジェクト </param>
+        protected override void OnExpanded(RoutedEventArgs e)
+        {
+            Debug.WriteLine(Expanded);
+            if (Expanded)
+            {
+                return;
+            }
+            foreach (var item in Items.OfType<NavigationItemViewModel>())
+            {
+                item.CreateChildren();
+            }
+            Expanded = true;
+        }
+
+        #endregion
+
+        #region OnSelectedModelTreeViewItemメソッド
+
+        /// <summary>
+        /// 選択されたフォルダをプロパティに格納する
+        /// </summary>
+        /// <param name="sender"> イベントを発生させたオブジェクト </param>
+        /// <param name="e"> イベント関連の情報を持ったオブジェクト </param>
+        private void OnSelectedModelTreeViewItem(object sender, RoutedEventArgs e)
+        {
+            NavigationViewModel.SelectionItem.Value = IsSelected ?  NavigationViewModel.SelectionItem.Value : (NavigationViewModel)e.Source;
+        }
+
+        #endregion
+
 
         #region CreateChildrenメソッド
 
