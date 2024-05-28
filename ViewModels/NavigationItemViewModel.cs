@@ -22,36 +22,28 @@ namespace WindowsExplorer.ViewModels
         #region プロパティ
 
         /// <summary>
-        /// ディレクトリ
-        /// </summary>
-        public DirectoryInfo Directory { get; set; }
-
-        /// <summary>
         /// フォルダが展開されているかどうかのチェック
         /// </summary> 
         private bool Expanded { get; set; } = false;
 
         /// <summary>
-        /// FolderItemModelから値を得られるようにする。
+        /// FolderItemModelからデータを得られるようにする
         /// </summary>
-        public List<FolderItemModel> ViewModel { get; }
+        public FolderItemModel Model { get; }
 
         #endregion
 
         #region コンストラクタ
 
         /// <summary>
-        /// NavigationItemViewModelから渡されたディレクトリをFolderItemModelへ渡す
-        /// 
+        /// NavigationItemViewModelから渡されたディレクトリを属性として持つFolderItemModelをインスタンス化させる
         /// </summary>
-        /// <param name="directoryinfo"></param>
+        /// <param name="directoryinfo"> 渡されたディレクトリ </param>
         public NavigationItemViewModel(DirectoryInfo directoryinfo)
         {
-            Directory = directoryinfo;
-            Header = CreateHeader();
+            Header = CreateHeader(directoryinfo.Name);
             Selected += OnSelectedModelTreeViewItem;
-            ViewModel = new List<FolderItemModel>();
-            new FolderItemModel(Directory);
+            Model = new FolderItemModel(directoryinfo);
         }
 
         #endregion
@@ -62,7 +54,7 @@ namespace WindowsExplorer.ViewModels
         /// Headerを生成するメソッド
         /// </summary>
         /// <returns> アイコンとフォルダ名 </returns>
-        private StackPanel CreateHeader()
+        private StackPanel CreateHeader(string name)
         {
             var sp = new StackPanel() { Orientation = Orientation.Horizontal };
             sp.Children.Add(new Image()
@@ -71,7 +63,7 @@ namespace WindowsExplorer.ViewModels
                 Width = 15,
                 Height = 18,
             });
-            sp.Children.Add(new TextBlock() { Text = Directory.Name });
+            sp.Children.Add(new TextBlock() { Text = name });
             return sp;
         }
 
@@ -122,13 +114,14 @@ namespace WindowsExplorer.ViewModels
         /// </summary>
         public void CreateChildren()
         {
+            var directoryinfo = new DirectoryInfo(Model.FolderPath);
             try
             {
-                foreach (var dir in Directory.GetDirectories())
+                foreach (var dir in directoryinfo.GetDirectories())
                 {
                     if (dir.Attributes.HasFlag(FileAttributes.Directory))
                     {
-                        Items.Add(new FileItemModel(dir));
+                        Items.Add(new NavigationItemViewModel(dir));
                     }
                 }
             }

@@ -15,14 +15,9 @@ namespace WindowsExplorer.ViewModels
     /// <summary>
     /// ツリービューに関するVM
     /// </summary>
-    internal class NavigationViewModel : TreeViewItem
+    internal class NavigationViewModel : TreeView
     {
         #region プロパティ
-
-        /// <summary>
-        /// ディレクトリ
-        /// </summary>
-        public DirectoryInfo Directory { get; set; }
 
         /// <summary>
         /// 選択しているフォルダを判別する
@@ -30,9 +25,9 @@ namespace WindowsExplorer.ViewModels
         public static ReactiveProperty<NavigationViewModel> SelectionItem { get; set; } = new ReactiveProperty<NavigationViewModel>();
 
         /// <summary>
-        /// NavigationItemViewModelから値をとってこれるようにする。
+        /// NavigationItemViewModelから値を得る
         /// </summary>
-        public List<NavigationItemViewModel> ViewModel { get; }
+        public List<NavigationItemViewModel> ViewModelOfNavigationItem {get;} 
 
         #endregion
 
@@ -42,10 +37,9 @@ namespace WindowsExplorer.ViewModels
         /// </summary>
         public NavigationViewModel() 
         {
-            Directory = new DirectoryInfo(@"C:\");
-            var vm = new NavigationItemViewModel(Directory);
+            var vm = new NavigationItemViewModel(new DirectoryInfo(@"C:\"));
             vm.CreateChildren();
-            ViewModel = new List<NavigationItemViewModel>() { vm };
+            ViewModelOfNavigationItem = new List<NavigationItemViewModel>() { vm }; 
         }
 
     }
