@@ -1,14 +1,6 @@
 ﻿using Reactive.Bindings;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using WindowsExplorer.Models;
 
 namespace WindowsExplorer.ViewModels
 {
@@ -27,9 +19,11 @@ namespace WindowsExplorer.ViewModels
         /// <summary>
         /// NavigationItemViewModelから値を得る
         /// </summary>
-        public List<NavigationItemViewModel> ViewModelOfNavigationItem {get;} 
+        public List<NavigationItemViewModel> ViewModelOfNavigationItem {get;}
 
         #endregion
+
+        #region コンストラクタ
 
         /// <summary>
         /// パスをNavigationItemViewModelに渡す。
@@ -41,6 +35,8 @@ namespace WindowsExplorer.ViewModels
             vm.CreateChildren();
             ViewModelOfNavigationItem = new List<NavigationItemViewModel>() { vm }; 
         }
+
+        #endregion
 
     }
 }

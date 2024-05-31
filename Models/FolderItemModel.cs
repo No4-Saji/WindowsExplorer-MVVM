@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace WindowsExplorer.Models
 {
@@ -19,6 +14,7 @@ namespace WindowsExplorer.Models
         /// iconのフォルダのパス
         /// </summary>
         public static string IconUri { get; } = @"\Resources\Folder.ico";
+
         /// <summary>
         /// 取得したフォルダの名前
         /// </summary>
@@ -31,6 +27,8 @@ namespace WindowsExplorer.Models
 
         #endregion
 
+        #region コンストラクタ
+
         /// <summary>
         /// フォルダのパスと名前を保持する。
         /// </summary>
@@ -40,5 +38,8 @@ namespace WindowsExplorer.Models
             FolderName = directoryInfo.Name;
             FolderPath = directoryInfo.FullName;
         }
+
+        #endregion
+
     }
 }

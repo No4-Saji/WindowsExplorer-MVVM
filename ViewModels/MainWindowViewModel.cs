@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.IO;
-using WindowsExplorer.Models;
 
 namespace WindowsExplorer.ViewModels
 {
@@ -9,7 +7,7 @@ namespace WindowsExplorer.ViewModels
     /// </summary>
     internal class MainWindowViewModel : ObservableObject
     {
-        #region
+        #region プロパティ
 
         /// <summary>
         /// NavigationViewModelから値を得る
@@ -18,12 +16,17 @@ namespace WindowsExplorer.ViewModels
 
         #endregion
 
+        #region コンストラクタ
+
         /// <summary>
-        /// インスタンス化
+        /// NavigationViewModelから値を得られるようにする。
         /// </summary>
         public MainWindowViewModel()
         {
             ViewModelOfNavigation = new NavigationViewModel();
         }
+
+        #endregion
+
     }
 }
