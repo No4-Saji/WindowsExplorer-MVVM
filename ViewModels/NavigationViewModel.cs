@@ -1,24 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Reactive.Bindings;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace WindowsExplorer.ViewModels
 {
-    internal class NavigationViewModel
+    /// <summary>
+    /// ツリービューに関するVM
+    /// </summary>
+    internal class NavigationViewModel : TreeView
     {
-        public DirectoryInfo _Directory { get; set; }
+        #region プロパティ
 
-        public NavigationViewModel(DirectoryInfo directory) 
+        /// <summary>
+        /// 選択しているフォルダを判別する
+        /// </summary>
+        public static ReactiveProperty<NavigationViewModel> SelectionItem { get; set; } = new ReactiveProperty<NavigationViewModel>();
+
+        /// <summary>
+        /// NavigationItemViewModelから値を得る
+        /// </summary>
+        public List<NavigationItemViewModel> ViewModelOfNavigationItem {get;}
+
+        #endregion
+
+        #region コンストラクタ
+
+        /// <summary>
+        /// パスをNavigationItemViewModelに渡す。
+        /// この段階でrootディレクトリの子ディレクトリを作成しておく。
+        /// </summary>
+        public NavigationViewModel() 
         {
-        _Directory = directory;
-        
-
-
+            var vm = new NavigationItemViewModel(new DirectoryInfo(@"C:\"));
+            vm.CreateChildren();
+            ViewModelOfNavigationItem = new List<NavigationItemViewModel>() { vm }; 
         }
 
+        #endregion
 
     }
 }

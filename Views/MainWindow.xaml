@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding ViewModel}" >
+        <TreeView HorizontalAlignment="Left" Height="385" Margin="44,22,0,0" VerticalAlignment="Top" Width="220"  x:Name="TreeView" ItemsSource="{Binding ViewModelOfNavigation.ViewModelOfNavigationItem}" >
        
         </TreeView>
 
@@ -19,8 +19,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <!--
         <TextBlock HorizontalAlignment="Left" Height="40" Margin="291,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460" Text="{Binding ViewModel/SelectionItem.Value.Directory.Name}" />
-
+        -->
+                
     </Grid>
                 
             
